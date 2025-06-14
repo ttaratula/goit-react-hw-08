@@ -1,0 +1,26 @@
+.contactCard {
+    border: 5px solid palevioletred;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 8px;
+    background-color: #fff;
+  }
+  
+  .contactInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .icon {
+    margin-right: 5px;
+  }
+  
+  .deleteButton {
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  

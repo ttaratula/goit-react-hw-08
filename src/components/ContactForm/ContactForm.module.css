@@ -1,0 +1,32 @@
+.form {
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border: 5px solid orange;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .field {
+    width: 100%;
+    padding: 5px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+  }
+  .error {
+    color: red;
+    font-size: 12px;
+    margin-top: 4px;
+  }
+  
+  .button {
+    padding: 6px 12px;
+    cursor: pointer;
+  }
+  

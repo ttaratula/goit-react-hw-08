@@ -1,0 +1,22 @@
+.Nav {
+    align-items: center;
+    gap: 10px;
+    /* margin-bottom: 20px; */
+  }
+  
+  .link {
+    color: black;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    padding: 10px;
+    border-radius: 10px;
+    margin-right: 10px;
+  }
+  
+  .link:hover,
+  .link:focus {
+    background-color: orange;
+    outline: none;
+    color: black;
+  }
+  
