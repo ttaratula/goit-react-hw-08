@@ -1,8 +1,15 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 
 .searchbox {  
  padding: 10px;
  border-radius: 8px;
  margin-bottom: 20px;
  width: 287px;
+ margin: 0 auto;
 }
   

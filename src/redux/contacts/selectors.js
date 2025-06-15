@@ -7,15 +7,20 @@ export const selectLoading = (state) => state.contacts.loading;
 
 export const selectError = (state) => state.contacts.error;
 
+export const selectCurrentContact = (state) => state.contacts.currentContact;
+
 export const selectFilteredContacts = createSelector(
   [selectContacts, selectQueryFilter],
-  (contacts, filter) => {
-    return contacts?.filter(
-      (contact) =>
-        contact.name.toLowerCase().includes(filter.toLocaleLowerCase()) ||
-        contact.number.toLowerCase().includes(filter.toLocaleLowerCase())
-    );
+  (contacts = [], filter = '') => {
+    const normalizedFilter = filter.toLowerCase();
+
+    return contacts.filter((contact) => {
+      const name = contact.name || '';
+      const number = contact.number || '';
+      return (
+        name.toLowerCase().includes(normalizedFilter) ||
+        number.toLowerCase().includes(normalizedFilter)
+      );
+    });
   }
 );
-
-export const selectCurrentContact = (state) => state.contacts.currentContact;
