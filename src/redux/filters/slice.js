@@ -1,19 +1,61 @@
-import { createSlice } from '@reduxjs/toolkit';
+// export const { changeFilters } = slice.actions;
+// export default slice.reducer;
 
-const filtersSlice = createSlice({
-  name: 'filters',
+
+
+// import { createSlice } from '@reduxjs/toolkit';
+
+// const filtersSlice = createSlice({
+//   name: 'filters',
+//   initialState: {
+//     name: '',
+//   },
+//   reducers: {
+//     setNameFilter(state, action) {
+//       state.name = action.payload;
+//     },
+//   },
+// });
+
+// export const { setNameFilter } = filtersSlice.actions;
+// export const filtersReducer = filtersSlice.reducer;
+// export default filtersSlice.reducer; 
+
+// import { createSlice } from '@reduxjs/toolkit';
+
+// const filtersSlice = createSlice({
+//   name: 'filters',
+//   initialState: {
+//     name: '',
+//   },
+//   reducers: {
+//     setNameFilter(state, action) {
+//       state.name = action.payload;
+//     },
+//   },
+// });
+
+
+
+// export const { setNameFilter } = filtersSlice.actions;
+// export const filtersReducer = filtersSlice.reducer;
+// export default filtersSlice.reducer;
+
+import { createSlice } from "@reduxjs/toolkit";
+
+const slice = createSlice({
+  name: "filters",
   initialState: {
-    name: '',
+    query: "",
   },
   reducers: {
-    setNameFilter(state, action) {
-      state.name = action.payload;
+    changeFilters: (state, action) => {
+      state.query = action.payload;
     },
   },
 });
 
-export const { setNameFilter } = filtersSlice.actions;
+export const { changeFilters } = slice.actions;
+export default slice.reducer;
+export const selectNameFilter = (state) => state.filters.query;
 
-export const selectNameFilter = state => state.filters.name;
-
-export default filtersSlice.reducer;

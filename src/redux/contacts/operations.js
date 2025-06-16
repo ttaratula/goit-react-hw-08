@@ -1,12 +1,20 @@
 
-import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import axiosInstance from '../utils/api'; 
 
 // axios.defaults.baseURL = 'https://connections-api.goit.global';
-axios.defaults.baseURL = 'https://6845aa33fc51878754dbeb71.mockapi.io/'; 
 
 
+import axios from 'axios';
 
+const instance = axios.create({
+  baseURL: 'https://6845aa33fc51878754dbeb71.mockapi.io/',
+});
+
+export default instance;
+
+
+// FETCH CONTACTS
 export const fetchContacts = createAsyncThunk(
   'contacts/fetchAll',
   async (_, thunkAPI) => {
@@ -17,10 +25,12 @@ export const fetchContacts = createAsyncThunk(
       return thunkAPI.rejectWithValue('No token');
     }
 
-    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-
     try {
-      const res = await axios.get('/contacts');
+      const res = await axiosInstance.get('/contacts', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       return res.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
@@ -28,7 +38,7 @@ export const fetchContacts = createAsyncThunk(
   }
 );
 
-// Add Contact
+// ADD CONTACT
 export const addContact = createAsyncThunk(
   'contacts/addContact',
   async (contact, thunkAPI) => {
@@ -39,10 +49,12 @@ export const addContact = createAsyncThunk(
       return thunkAPI.rejectWithValue('No token');
     }
 
-    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-
     try {
-      const res = await axios.post('/contacts', contact);
+      const res = await axiosInstance.post('/contacts', contact, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       return res.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
@@ -50,7 +62,7 @@ export const addContact = createAsyncThunk(
   }
 );
 
-// Delete Contact
+// DELETE CONTACT
 export const deleteContact = createAsyncThunk(
   'contacts/deleteContact',
   async (contactId, thunkAPI) => {
@@ -61,21 +73,23 @@ export const deleteContact = createAsyncThunk(
       return thunkAPI.rejectWithValue('No token');
     }
 
-    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-
     try {
-      await axios.delete(`/contacts/${contactId}`);
-      return contactId; // повертаємо ID, бо бекенд нічого не повертає
+      await axiosInstance.delete(`/contacts/${contactId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return contactId;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
     }
   }
 );
 
-// Edit Contact
+// EDIT CONTACT
 export const editContact = createAsyncThunk(
   'contacts/edit',
-  async (values, thunkAPI) => {
+  async ({ id, name, number }, thunkAPI) => {
     const state = thunkAPI.getState();
     const token = state.auth.token;
 
@@ -83,12 +97,13 @@ export const editContact = createAsyncThunk(
       return thunkAPI.rejectWithValue('No token');
     }
 
-    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-
     try {
-      const { id, name, number } = values;
-      const response = await axios.patch(`/contacts/${id}`, { name, number });
-      return response.data;
+      const res = await axiosInstance.patch(`/contacts/${id}`, { name, number }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return res.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
