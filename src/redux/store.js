@@ -10,10 +10,13 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+
+// Імпорти редюсерів
 import contactsReducer from "./contacts/slice";
 import filtersReducer from "./filters/slice";
 import authReducer from "./auth/slice";
 
+// Конфігурація для збереження токена в localStorage
 const persistConfig = {
   key: "auth",
   storage,
@@ -22,6 +25,7 @@ const persistConfig = {
 
 const persistedAuthReducer = persistReducer(persistConfig, authReducer);
 
+// Створення Redux store
 export const store = configureStore({
   reducer: {
     contacts: contactsReducer,
@@ -36,4 +40,5 @@ export const store = configureStore({
     }),
 });
 
+// Створення persistor для redux-persist
 export const persistor = persistStore(store);

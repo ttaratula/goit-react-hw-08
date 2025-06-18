@@ -1,10 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {
-  fetchContacts,
-  addContact,
-  deleteContact,
-  editContact,
-} from "./operations";
+import { fetchContacts, addContact, deleteContact, editContact } from "./operations";
 import { logout } from "../auth/operations";
 
 const handlePending = (state) => {
@@ -16,12 +11,12 @@ const handleRejected = (state, action) => {
   state.error = action.payload;
 };
 
-const handleFullfilled = (state) => {
+const handleFulfilled = (state) => {
   state.loading = false;
   state.error = null;
 };
 
-const slice = createSlice({
+const contactsSlice = createSlice({
   name: "contacts",
   initialState: {
     items: [],
@@ -38,40 +33,33 @@ const slice = createSlice({
     builder
       .addCase(fetchContacts.pending, handlePending)
       .addCase(fetchContacts.fulfilled, (state, action) => {
-        handleFullfilled(state);
+        handleFulfilled(state);
         state.items = action.payload;
       })
       .addCase(fetchContacts.rejected, handleRejected)
 
       .addCase(addContact.pending, handlePending)
       .addCase(addContact.fulfilled, (state, action) => {
-        handleFullfilled(state);
+        handleFulfilled(state);
         state.items.push(action.payload);
       })
       .addCase(addContact.rejected, handleRejected)
 
       .addCase(deleteContact.pending, handlePending)
       .addCase(deleteContact.fulfilled, (state, action) => {
-        handleFullfilled(state);
+        handleFulfilled(state);
         state.items = state.items.filter(
-          (contact) => contact.id !== action.payload.id
+          (contact) => contact.id !== action.payload
         );
       })
       .addCase(deleteContact.rejected, handleRejected)
 
       .addCase(editContact.pending, handlePending)
       .addCase(editContact.fulfilled, (state, action) => {
-        handleFullfilled(state);
-        state.items = state.items.map((item) => {
-          if (item.id === action.payload.id) {
-            return {
-              ...item,
-              name: action.payload.name,
-              number: action.payload.number,
-            };
-          }
-          return item;
-        });
+        handleFulfilled(state);
+        state.items = state.items.map((item) =>
+          item.id === action.payload.id ? action.payload : item
+        );
       })
       .addCase(editContact.rejected, handleRejected)
 
@@ -83,6 +71,5 @@ const slice = createSlice({
   },
 });
 
-export const { setCurrentContact } = slice.actions;
-
-export default slice.reducer;
+export const { setCurrentContact } = contactsSlice.actions;
+export default contactsSlice.reducer;
